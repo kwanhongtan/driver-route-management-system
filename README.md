@@ -1,7 +1,6 @@
-# COMP1002 Final Assignment - ZipRide Dispatch System
+# ZipRide Dispatch System
 
 Author: Tan Kwan Hong
-Student ID: 23442423
 Language: Java
 
 ## What This Project Is
