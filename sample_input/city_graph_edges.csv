@@ -1,0 +1,13 @@
+LocationA,LocationB,DrivingTimeMinutes
+CBD,University,8
+CBD,ShoppingMall,6
+CBD,Hospital,7
+University,SuburbNorth,10
+SuburbNorth,Hospital,5
+Hospital,ShoppingMall,4
+ShoppingMall,SuburbSouth,9
+SuburbSouth,Airport,12
+Airport,Harbour,11
+Harbour,IndustrialPark,7
+IndustrialPark,Stadium,6
+Stadium,CBD,14

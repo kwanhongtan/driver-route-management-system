@@ -1,0 +1,149 @@
+=== ZIPRIDE DISPATCH SYSTEM MENU ===
+1. Module 1 - Graph route planning
+2. Module 2 - Hash table lookup
+3. Module 3 - Heap pickup scheduling
+4. Module 4 - Sorting pickup records
+5. Run all modules
+0. Exit
+Enter choice: 
+=== MODULE 1: GRAPH-BASED ROUTE PLANNING ===
+Graph structure:
+Airport -> Harbour(11), SuburbSouth(12)
+CBD -> Hospital(7), ShoppingMall(6), Stadium(14), University(8)
+Harbour -> Airport(11), IndustrialPark(7)
+Hospital -> CBD(7), ShoppingMall(4), SuburbNorth(5)
+IndustrialPark -> Harbour(7), Stadium(6)
+IsolatedDepot -> 
+ShoppingMall -> CBD(6), Hospital(4), SuburbSouth(9)
+Stadium -> CBD(14), IndustrialPark(6)
+SuburbNorth -> Hospital(5), University(10)
+SuburbSouth -> Airport(12), ShoppingMall(9)
+University -> CBD(8), SuburbNorth(10)
+
+BFS from CBD:
+Level 0: CBD
+Level 1: Hospital, ShoppingMall, Stadium, University
+Level 2: IndustrialPark, SuburbNorth, SuburbSouth
+Level 3: Airport, Harbour
+Note: IsolatedDepot is intentionally unreachable from CBD.
+DFS cycle detected: true
+Cycle members: Hospital -> CBD -> University -> SuburbNorth -> Hospital
+Dijkstra CBD to Airport: time=27 minutes, path=CBD -> ShoppingMall -> SuburbSouth -> Airport
+Dijkstra CBD to IsolatedDepot: unreachable
+
+=== MODULE 2: HASH-BASED LOOKUP ===
+Passenger insert log:
+INSERTED key 101 at bucket 25
+INSERTED key 102 at bucket 26
+INSERTED key 103 at bucket 27
+INSERTED key 104 at bucket 28
+...
+Load factor after 10 passenger inserts: 0.189
+INSERTED key 118 at bucket 10
+INSERTED key 119 at bucket 11
+INSERTED key 120 at bucket 34
+Load factor after 20 passenger inserts: 0.377
+Driver insert log:
+INSERTED key 201 at bucket 32
+INSERTED key 202 at bucket 33
+INSERTED key 203 at bucket 34
+INSERTED key 204 at bucket 35
+...
+Load factor after 10 driver inserts: 0.189
+INSERTED key 218 at bucket 17
+INSERTED key 219 at bucket 18
+INSERTED key 220 at bucket 41
+Load factor after 20 driver inserts: 0.377
+Collision example using table size 53:
+INSERTED key 155 at bucket 35
+Probe sequence from bucket 25 after inserting keys 101 and 155: 25:101 -> 26:102 -> 27:103 -> 28:104 -> 29:105 -> 30:106 -> 31:107 -> 32:108 -> 33:109 -> 34:120 -> 35:155 -> 36:empty
+Search passenger 101: HIT Passenger(101, Aisha Rahman, pickup=CBD, tier=1), comparisons=1
+Search passenger 120: HIT Passenger(120, Tara Singh, pickup=IndustrialPark, tier=2), comparisons=2
+Search passenger 999: MISS, comparisons=1
+Search driver 201: HIT Driver(201, Adam Driver, location=CBD, status=Available), comparisons=1
+Search driver 999: MISS, comparisons=1
+DELETED key 155 from bucket 35, comparisons=11
+Search passenger 155 after delete: MISS, comparisons=12
+MISSING key 999 after probing from bucket 50, comparisons=1
+PassengerTable records=20, table_size=53, load_factor=0.377, operation_count=59
+DriverTable records=20, table_size=53, load_factor=0.377, operation_count=24
+
+=== MODULE 3: HEAP-BASED PICKUP SCHEDULING ===
+Request 1: passenger 101 assigned nearest driver 211, T=1, path=CBD, priority=1005.00
+Heap after insert: [R1:P101/D211/T1/1005.00]
+Request 2: passenger 111 assigned nearest driver 201, T=1, path=CBD, priority=1004.00
+Heap after insert: [R1:P101/D211/T1/1005.00, R2:P111/D201/T1/1004.00]
+Request 3: passenger 103 assigned nearest driver 213, T=1, path=University, priority=1004.00
+Heap after insert: [R1:P101/D211/T1/1005.00, R2:P111/D201/T1/1004.00, R3:P103/D213/T1/1004.00]
+Request 4: passenger 113 assigned nearest driver 216, T=10, path=SuburbNorth -> University, priority=105.00
+Heap after insert: [R1:P101/D211/T1/1005.00, R2:P111/D201/T1/1004.00, R3:P103/D213/T1/1004.00, R4:P113/D216/T10/105.00]
+Request 5: passenger 105 assigned nearest driver 214, T=1, path=ShoppingMall, priority=1005.00
+Heap after insert: [R1:P101/D211/T1/1005.00, R5:P105/D214/T1/1005.00, R3:P103/D213/T1/1004.00, R4:P113/D216/T10/105.00, R2:P111/D201/T1/1004.00]
+Request 6: passenger 114 assigned nearest driver 206, T=4, path=Hospital -> ShoppingMall, priority=251.00
+Heap after insert: [R1:P101/D211/T1/1005.00, R5:P105/D214/T1/1005.00, R3:P103/D213/T1/1004.00, R4:P113/D216/T10/105.00, R2:P111/D201/T1/1004.00, R6:P114/D206/T4/251.00]
+Request 7: passenger 108 assigned nearest driver 208, T=1, path=IndustrialPark, priority=1003.00
+Heap after insert: [R1:P101/D211/T1/1005.00, R5:P105/D214/T1/1005.00, R3:P103/D213/T1/1004.00, R4:P113/D216/T10/105.00, R2:P111/D201/T1/1004.00, R6:P114/D206/T4/251.00, R7:P108/D208/T1/1003.00]
+Request 8: passenger 120 assigned nearest driver 220, T=1, path=IndustrialPark, priority=1004.00
+Heap after insert: [R1:P101/D211/T1/1005.00, R5:P105/D214/T1/1005.00, R3:P103/D213/T1/1004.00, R8:P120/D220/T1/1004.00, R2:P111/D201/T1/1004.00, R6:P114/D206/T4/251.00, R7:P108/D208/T1/1003.00, R4:P113/D216/T10/105.00]
+Request 9: passenger 102 assigned nearest driver 202, T=1, path=Airport, priority=1003.00
+Heap after insert: [R1:P101/D211/T1/1005.00, R5:P105/D214/T1/1005.00, R3:P103/D213/T1/1004.00, R8:P120/D220/T1/1004.00, R2:P111/D201/T1/1004.00, R6:P114/D206/T4/251.00, R7:P108/D208/T1/1003.00, R4:P113/D216/T10/105.00, R9:P102/D202/T1/1003.00]
+Request 10: passenger 112 assigned nearest driver 219, T=11, path=Harbour -> Airport, priority=92.91
+Heap after insert: [R1:P101/D211/T1/1005.00, R5:P105/D214/T1/1005.00, R3:P103/D213/T1/1004.00, R8:P120/D220/T1/1004.00, R2:P111/D201/T1/1004.00, R6:P114/D206/T4/251.00, R7:P108/D208/T1/1003.00, R4:P113/D216/T10/105.00, R9:P102/D202/T1/1003.00, R10:P112/D219/T11/92.91]
+Edge case - invalid passenger:
+Request rejected: passenger 999 was not found.
+Edge case - no available driver:
+Request queued: no available reachable driver for passenger 101.
+Edge case - tier update before scheduling:
+Passenger 180 updated to tier 1 before request insertion.
+Request 11: passenger 180 assigned nearest driver 217, T=12, path=SuburbSouth -> Airport, priority=88.33
+Heap after tier-update insert: [R1:P101/D211/T1/1005.00, R5:P105/D214/T1/1005.00, R3:P103/D213/T1/1004.00, R8:P120/D220/T1/1004.00, R2:P111/D201/T1/1004.00, R6:P114/D206/T4/251.00, R7:P108/D208/T1/1003.00, R4:P113/D216/T10/105.00, R9:P102/D202/T1/1003.00, R10:P112/D219/T11/92.91, R11:P180/D217/T12/88.33]
+Peek highest priority: R1:P101/D211/T1/1005.00
+Extracted dispatch: R1:P101/D211/T1/1005.00
+Heap after extraction: [R5:P105/D214/T1/1005.00, R8:P120/D220/T1/1004.00, R3:P103/D213/T1/1004.00, R9:P102/D202/T1/1003.00, R2:P111/D201/T1/1004.00, R6:P114/D206/T4/251.00, R7:P108/D208/T1/1003.00, R4:P113/D216/T10/105.00, R11:P180/D217/T12/88.33, R10:P112/D219/T11/92.91]
+Extracted dispatch: R5:P105/D214/T1/1005.00
+Heap after extraction: [R8:P120/D220/T1/1004.00, R2:P111/D201/T1/1004.00, R3:P103/D213/T1/1004.00, R9:P102/D202/T1/1003.00, R10:P112/D219/T11/92.91, R6:P114/D206/T4/251.00, R7:P108/D208/T1/1003.00, R4:P113/D216/T10/105.00, R11:P180/D217/T12/88.33]
+Extracted dispatch: R8:P120/D220/T1/1004.00
+Heap after extraction: [R2:P111/D201/T1/1004.00, R9:P102/D202/T1/1003.00, R3:P103/D213/T1/1004.00, R4:P113/D216/T10/105.00, R10:P112/D219/T11/92.91, R6:P114/D206/T4/251.00, R7:P108/D208/T1/1003.00, R11:P180/D217/T12/88.33]
+Extracted dispatch: R2:P111/D201/T1/1004.00
+Heap after extraction: [R3:P103/D213/T1/1004.00, R9:P102/D202/T1/1003.00, R7:P108/D208/T1/1003.00, R4:P113/D216/T10/105.00, R10:P112/D219/T11/92.91, R6:P114/D206/T4/251.00, R11:P180/D217/T12/88.33]
+Extracted dispatch: R3:P103/D213/T1/1004.00
+Heap after extraction: [R9:P102/D202/T1/1003.00, R4:P113/D216/T10/105.00, R7:P108/D208/T1/1003.00, R11:P180/D217/T12/88.33, R10:P112/D219/T11/92.91, R6:P114/D206/T4/251.00]
+
+=== MODULE 4: SORTING PICKUP RECORDS ===
+Merge sort first 12 sorted by EstimatedPickupTime:
+R9:T6, R11:T6, R4:T9, R1:T12, R7:T13, R5:T21, R3:T22, R10:T23, R2:T27, R12:T27, R8:T28, R6:T34
+Merge sorted correctly: true, comparisons=32
+Quick sorted correctly: true, comparisons=48
+Condition correctness preview on 100 records:
+random: merge_sorted=true, quick_sorted=true, first/last T=1/34
+nearly_sorted: merge_sorted=true, quick_sorted=true, first/last T=1/34
+reversed: merge_sorted=true, quick_sorted=true, first/last T=1/34
+Benchmark table:
+Algorithm,Size,Condition,Milliseconds,Comparisons,Moves,Sorted
+MergeSort,100,random,0.038,547,1344,true
+QuickSort,100,random,0.049,926,1071,true
+MergeSort,100,nearly_sorted,0.020,451,1344,true
+QuickSort,100,nearly_sorted,0.059,1385,843,true
+MergeSort,100,reversed,0.019,416,1344,true
+QuickSort,100,reversed,0.031,1052,984,true
+MergeSort,500,random,0.205,3828,8976,true
+QuickSort,500,random,0.198,11812,5709,true
+MergeSort,500,nearly_sorted,0.188,3160,8976,true
+QuickSort,500,nearly_sorted,0.237,25315,4968,true
+MergeSort,500,reversed,0.103,2706,8976,true
+QuickSort,500,reversed,0.422,18448,5367,true
+MergeSort,1000,random,0.485,8627,19952,true
+QuickSort,1000,random,0.586,43612,10434,true
+MergeSort,1000,nearly_sorted,0.231,7306,19952,true
+QuickSort,1000,nearly_sorted,0.465,75527,11079,true
+MergeSort,1000,reversed,0.296,5925,19952,true
+QuickSort,1000,reversed,0.412,69497,10839,true
+=== ZIPRIDE DISPATCH SYSTEM MENU ===
+1. Module 1 - Graph route planning
+2. Module 2 - Hash table lookup
+3. Module 3 - Heap pickup scheduling
+4. Module 4 - Sorting pickup records
+5. Run all modules
+0. Exit
+Enter choice: 
+Exiting ZipRide Dispatch System demo.

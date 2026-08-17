@@ -1,0 +1,21 @@
+DriverID,Name,CurrentLocation,AvailabilityStatus
+201,Adam Driver,CBD,Available
+202,Bella Cruz,Airport,Available
+203,Caleb Ford,University,Busy
+204,Dina Park,SuburbNorth,Available
+205,Evan Stone,ShoppingMall,Offline
+206,Fiona Tay,Hospital,Available
+207,Gavin Low,SuburbSouth,Busy
+208,Helen Wu,IndustrialPark,Available
+209,Ivan Ho,Stadium,Available
+210,Jenny Chan,Harbour,Offline
+211,Ken Adams,CBD,Available
+212,Laura Tan,Airport,Busy
+213,Mika Ito,University,Available
+214,Noah Lee,ShoppingMall,Available
+215,Olivia Koh,Hospital,Offline
+216,Peter Lim,SuburbNorth,Available
+217,Qian Xu,SuburbSouth,Available
+218,Rina Patel,Stadium,Busy
+219,Sean Ng,Harbour,Available
+220,Tina Yu,IndustrialPark,Available

@@ -1,0 +1,21 @@
+PassengerID,Name,PickupLocation,MembershipTier
+101,Aisha Rahman,CBD,1
+102,Ben Tan,Airport,3
+103,Chloe Lim,University,2
+104,Daniel Wong,SuburbNorth,5
+105,Elena Smith,ShoppingMall,1
+106,Farid Ali,Hospital,4
+107,Grace Lee,SuburbSouth,2
+108,Hannah Ng,IndustrialPark,3
+109,Isaac Khoo,Stadium,5
+110,Jia Chen,Harbour,1
+111,Kumar Raj,CBD,2
+112,Lily Ong,Airport,4
+113,Marcus Teo,University,1
+114,Nora Abdullah,ShoppingMall,5
+115,Oscar Yap,Hospital,3
+116,Priya Das,SuburbNorth,2
+117,Quinn Ho,SuburbSouth,1
+118,Rachel Foo,Stadium,4
+119,Samuel Goh,Harbour,3
+120,Tara Singh,IndustrialPark,2
