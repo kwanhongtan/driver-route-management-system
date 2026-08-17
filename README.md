@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # COMP1002 Final Assignment - ZipRide Dispatch System
 
 Author: Tan Kwan Hong
@@ -105,4 +104,4 @@ report/output_screenshot/
 ```
 =======
 # driver-route-management-system
->>>>>>> 19effd9d92ce0077e788cdc6baf7525e81229355
+
