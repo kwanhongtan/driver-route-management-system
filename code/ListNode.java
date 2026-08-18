@@ -1,6 +1,5 @@
 /*
  * Author: Tan Kwan Hong
- * Student ID: 23442423
  * Date: 26 May 2026
  * Description: Linked-list node used by the graph adjacency-list structure.
  */

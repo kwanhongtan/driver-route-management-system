@@ -1,6 +1,5 @@
 /*
  * Author: Tan Kwan Hong
- * Student ID: 23442423
  * Date: 26 May 2026
  * Description: Implements the city graph, BFS, DFS cycle detection, and Dijkstra shortest paths.
  * The graph stores a linked list of GraphNode objects, and each GraphNode

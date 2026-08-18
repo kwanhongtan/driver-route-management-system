@@ -1,6 +1,5 @@
 /*
  * Author: Tan Kwan Hong
- * Student ID: 23442423
  * Date: 28 May 2026
  * Description: Implements merge sort, quick sort, and sorting benchmarks.
  */

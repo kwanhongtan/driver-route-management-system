@@ -1,6 +1,5 @@
 /*
  * Author: Tan Kwan Hong
- * Student ID: 23442423
  * Date: 27 May 2026
  * Description: Implements an array-based max heap for pickup request priority.
  */
